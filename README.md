@@ -30,3 +30,5 @@ Aplicativo desenvolvido em Vue Tradicional, onde estravés de API aberta e publi
 
 Funcionando em HTML puro importando script do VUE
 
+Melhorias a fazer: Efetuar validação de CNPJ na entrada com máscara.
+
