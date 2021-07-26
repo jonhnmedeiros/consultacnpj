@@ -8,6 +8,16 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Consulta CNPJ</title>
+    <style>
+        body {
+            font: 16px "Helvetica Neue", Arial, sans-serif;
+            color: #121214;
+            margin: 200px;
+        }
+        table {
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
@@ -29,7 +39,62 @@
           <div class="list-group">
             <div class="list-group-item" v-for="(query, index) in allQuerys">
               <span class="comment__author">CNPJ: <strong>{{ query.cnpj }}</strong></span>
-                <p>{{query.result}}</p>
+                <p>-----</p>
+                <table>
+                    <tr>
+                        <th>Razão Social</th>
+                        <td>{{query.result.razao_social}}</td>
+                    </tr>
+                    <tr>
+                        <th>Nome Fantasia</th>
+                        <td>{{query.result.nome_fantasia}}</td>
+                    </tr>
+                    <tr>
+                        <th>Situação Cadastral</th>
+                        <td>{{query.result.descricao_situacao_cadastral}}</td>
+                    </tr>                 
+                    <tr>
+                        <th>CNAE</th>
+                        <td>{{query.result.cnae_fiscal}} - {{query.result.cnae_fiscal_descricao}}</td>
+                    </tr>
+                    <tr>
+                        <th>Capital Social</th>
+                        <td>{{query.result.capital_social}}</td>
+                    </tr>
+                    <tr>
+                        <th>Data da situação cadastral</th>
+                        <td>{{query.result.data_situacao_cadastral}}</td>
+                    </tr>
+                    <tr>
+                        <th>Data de início de atividade</th>
+                        <td>{{query.result.data_inicio_atividade}}</td>
+                    </tr>
+                    <tr>
+                        <th>Endereço</th>
+                        <td>{{query.result.descricao_tipo_logradouro}} {{query.result.logradouro}} , {{query.result.numero}}</td>
+                    </tr>
+                    <tr>
+                        <th>Complemento</th>
+                        <td>{{query.result.complemento}}</td>
+                    </tr>
+                    <tr>
+                        <th>Bairro</th>
+                        <td>{{query.result.bairro}}</td>
+                    </tr>
+                    <tr>
+                        <th>UF</th>
+                        <td>{{query.result.uf}}</td>
+                    </tr>
+                    <tr>
+                        <th>CEP</th>
+                        <td>{{query.result.cep}}</td>
+                    </tr>
+                    <tr>
+                        <th>Telefone</th>
+                        <td>{{query.result.ddd_telefone_1}}</td>
+                    </tr>
+                    <br>
+                </table>
               <div>
                 <a href="#" title="Excluir" v-on:click.prevent="removeQuery(index)">Excluir</a>
               </div>
@@ -45,18 +110,21 @@
                 }
             },
             methods: {
-
+                //
                 async addQuery() {
-                    const url = "https://api-publica.speedio.com.br/buscarcnpj?cnpj=" + this.cnpj;
+                    // Consult API with key on form
+                    const url = "https://minhareceita.org/" + this.cnpj;
                     const response = await fetch(url);
                     const data = await response.json();
                     this.data = data;
 
+                    // Push result data to querys array
                     this.querys.push({
                         cnpj: this.cnpj,
                         result: data
                     });
 
+                    // Clear form
                     this.cnpj = '';
                 },
                 removeQuery(index) {
@@ -78,8 +146,8 @@
                     console.log('val', val)
                 }
             }
+            
         })
     </script>
 </body>
-
 </html>
